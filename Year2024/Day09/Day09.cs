@@ -10,16 +10,24 @@ namespace AdventOfCode.Year2024
 {
     class Day09 : IDay
     {
+        public Day09(string inputFilePath)
+        {
+            ParseInput(inputFilePath);
+        }
+
+        private void ParseInput(string inputFilePath)
+        {
+            var lines = StaticHelpers.GetLines(inputFilePath);
+        }
+
         public void Task1()
         {
-            var lines = StaticHelpers.GetLines(this.GetType());
             
         }
 
         public void Task2()
         {
-            var lines = StaticHelpers.GetLines(this.GetType()).ToList();
-            
+
         }
     }
 }
