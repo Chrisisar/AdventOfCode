@@ -12,7 +12,7 @@ namespace AdventOfCode
         static void Main(string[] args)
         {
             //NewYearGenerator.GenerateNextYear(2024);
-            Type dayType = typeof(Day02);
+            Type dayType = typeof(Day11);
 
 
 
@@ -20,22 +20,15 @@ namespace AdventOfCode
             var files = StaticHelpers.GetAllTxtFiles(dayType);
             foreach (var file in files)
             {
-                try
-                {
-                    Console.WriteLine($"Running solution for ***{file.Substring(file.LastIndexOf('\\') + 1)}***");
-                    IDay day = Activator.CreateInstance(dayType, file) as IDay;
-                    Console.WriteLine($"Answer to task 1 is:");
-                    day.Task1();
-                    Console.WriteLine($"It took {DateTime.Now.Subtract(startDate).TotalMilliseconds}ms.");
-                    startDate = DateTime.Now;
-                    Console.WriteLine("Answer to task 2 is:");
-                    day.Task2();
-                    Console.WriteLine($"It took {DateTime.Now.Subtract(startDate).TotalMilliseconds}ms.");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
+                Console.WriteLine($"Running solution for ***{file.Substring(file.LastIndexOf('\\') + 1)}***");
+                IDay day = Activator.CreateInstance(dayType, file) as IDay;
+                Console.WriteLine($"Answer to task 1 is:");
+                day.Task1();
+                Console.WriteLine($"It took {DateTime.Now.Subtract(startDate).TotalMilliseconds}ms.");
+                startDate = DateTime.Now;
+                Console.WriteLine("Answer to task 2 is:");
+                day.Task2();
+                Console.WriteLine($"It took {DateTime.Now.Subtract(startDate).TotalMilliseconds}ms.");
             }
         }
     }
