@@ -135,5 +135,15 @@ namespace AdventOfCode.Helpers
         {
             return File.ReadAllLines(path);
         }
+
+        public static bool TryConvertingDoubleToLongInteger(double value, out long longValue)
+        {
+            var success = Math.Abs(value % 1) <= (Double.Epsilon * 100);
+            if (success)
+                longValue = (long)value;
+            else
+                longValue = 0;
+            return success;
+        }
     }
 }
