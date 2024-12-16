@@ -1,6 +1,7 @@
 ﻿using AdventOfCode.Helpers;
 using AdventOfCode.Year2024;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,14 +13,13 @@ namespace AdventOfCode
         static void Main(string[] args)
         {
             //NewYearGenerator.GenerateNextYear(2024);
-            Type dayType = typeof(Day13);
+            Type dayType = typeof(Day14);
 
 
-
-            DateTime startDate = DateTime.Now;
             var files = StaticHelpers.GetAllTxtFiles(dayType);
             foreach (var file in files)
             {
+                DateTime startDate = DateTime.Now;
                 Console.WriteLine($"Running solution for ***{file.Substring(file.LastIndexOf('\\') + 1)}***");
                 IDay day = Activator.CreateInstance(dayType, file) as IDay;
                 Console.WriteLine($"Answer to task 1 is:");
