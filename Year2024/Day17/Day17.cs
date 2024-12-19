@@ -14,6 +14,7 @@ namespace AdventOfCode.Year2024
         List<int> instructions = new List<int>();
         int pointer;
         List<long> output = new List<long>();
+        List<long> PartTwoResults = new List<long>();
 
         public Day17(string inputFilePath)
         {
@@ -32,52 +33,53 @@ namespace AdventOfCode.Year2024
 
         public void Task1()
         {
+            PerformProgram(RegA, instructions.Count);
+            Console.WriteLine(string.Join(",", output));
+        }
+
+        void PerformProgram(long regA, int stopAtOutputLength)
+        {
+            output = new List<long>();
+            RegA = regA;
             pointer = 0;
-            while (pointer < instructions.Count)
+            while (pointer < instructions.Count && output.Count < stopAtOutputLength)
             {
                 int opcode = instructions[pointer];
                 int operand = instructions[pointer + 1];
                 RunInstruction(opcode, operand);
             }
-            Console.WriteLine(string.Join(",", output));
-        }
-
-        public void Task2Brute()
-        {
-            long startingRegAValue = 6109323397;
-            string instructionString = string.Join(",", instructions);
-            while(true)
-            {
-                RegA = startingRegAValue;
-                RegB = 0;
-                RegC = 0;
-                output = new List<long>();
-
-                pointer = 0;
-                while (pointer < instructions.Count)
-                {
-                    int opcode = instructions[pointer];
-                    int operand = instructions[pointer + 1];
-                    RunInstruction(opcode, operand);
-                    string outputString = string.Join(",", output);
-                    if(!instructionString.StartsWith(outputString))
-                    {
-                        break;
-                    }
-                }
-                if(instructionString == string.Join(",", output))
-                {
-                    break;
-                }
-
-                startingRegAValue++;
-            }
-            Console.WriteLine(startingRegAValue);
         }
 
         public void Task2()
         {
+            for (int a = 512; a <= 4096; a++)
+            {
+                PerformProgram(a, 1);
+                if (output[0] == instructions[0])
+                {
+                    AddNewOctalToA(a, 1);
+                }
+            }
+            Console.WriteLine(PartTwoResults.Min());
+        }
 
+
+        void AddNewOctalToA(long a, int positionToCheck)
+        {
+            if (positionToCheck == instructions.Count)
+            {
+                PartTwoResults.Add(a);
+                return;
+            }
+            for (int i = 0; i < 8; i++)
+            {
+                long tempA = i * CalculateDenominator(8 + positionToCheck * 3) + a;
+                PerformProgram(tempA, positionToCheck + 1);
+                if (positionToCheck < output.Count && output[positionToCheck] == instructions[positionToCheck])
+                {
+                    AddNewOctalToA(tempA, positionToCheck + 1);
+                }
+            }
         }
 
         void RunInstruction(int opcode, int operand)
@@ -113,20 +115,21 @@ namespace AdventOfCode.Year2024
             pointer += 2;
         }
 
+
         private void CDV(int operand)
         {
-            RegC = RegA / CalculateDenominator(operand);
+            RegC = RegA / CalculateDenominator(TranslateToComboOperand(operand));
         }
 
         private void BDV(int operand)
         {
-            RegB = RegA / CalculateDenominator(operand);
+            RegB = RegA / CalculateDenominator(TranslateToComboOperand(operand));
         }
 
-        private long CalculateDenominator(int operand)
+        private long CalculateDenominator(long power)
         {
             long denominator = 1;
-            for (int i = 0; i < TranslateToComboOperand(operand); i++)
+            for (int i = 0; i < power; i++)
             {
                 denominator *= 2;
             }
@@ -162,7 +165,7 @@ namespace AdventOfCode.Year2024
 
         private void ADV(int operand)
         {
-            RegA /= CalculateDenominator(operand);
+            RegA /= CalculateDenominator(TranslateToComboOperand(operand));
         }
 
         long TranslateToComboOperand(int operand)
