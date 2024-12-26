@@ -61,12 +61,63 @@ namespace AdventOfCode.Helpers
             return res.ToString();
         }
 
+        public static string BinaryAddition(string value1, string value2)
+        {
+            int value1Length = value1.Length;
+            int value2Length = value2.Length;
+            int newValueLength = Math.Max(value1Length, value2Length) + 1;
+            char[] charArray = new char[newValueLength];
+            bool carry = false;
+            for (int i = 1; i <= newValueLength; i++)
+            {
+                char c = value1Length >= i ? value1[value1Length - i] : '0';
+                char c2 = value2Length >= i ? value2[value2Length - i] : '0';
+                if (c == '1' && c2 == '1')
+                {
+                    if (carry)
+                    {
+                        charArray[newValueLength - i] = '1';
+                    }
+                    else
+                    {
+                        charArray[newValueLength - i] = '0';
+                        carry = true;
+                    }
+                }
+                if (c == '1' && c2 == '0'
+                    || c == '0' && c2 == '1')
+                {
+                    if (carry)
+                    {
+                        charArray[newValueLength - i] = '0';
+                    }
+                    else
+                    {
+                        charArray[newValueLength - i] = '1';
+                    }
+                }
+                if(c == '0' && c2 == '0')
+                {
+                    if(carry)
+                    {
+                        charArray[newValueLength - i] = '1';
+                        carry = false;
+                    }
+                    else
+                    {
+                        charArray[newValueLength - i] = '0';    
+                    }
+                }
+            }
+            return new string(charArray);
+        }
+
         public static string GetBinaryFromHex(string hex)
         {
             StringBuilder sb = new StringBuilder();
-            foreach(var character in hex)
+            foreach (var character in hex)
             {
-                switch(character)
+                switch (character)
                 {
                     case '0':
                         sb.Append("0000");

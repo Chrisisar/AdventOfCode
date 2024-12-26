@@ -158,4 +158,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Year2024\Day24\Temp\" />
+  </ItemGroup>
+
 </Project>
