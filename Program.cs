@@ -1,10 +1,6 @@
 ﻿using AdventOfCode.Helpers;
-using AdventOfCode.Year2024;
+using AdventOfCode.Year2025;
 using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace AdventOfCode
 {
@@ -12,8 +8,8 @@ namespace AdventOfCode
     {
         static void Main(string[] args)
         {
-            //NewYearGenerator.GenerateNextYear(2024);
-            Type dayType = typeof(Day24);
+            //NewYearGenerator.GenerateNextYear(2025);
+            Type dayType = typeof(Day03);
 
 
             var files = StaticHelpers.GetAllTxtFiles(dayType);
