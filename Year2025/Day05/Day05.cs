@@ -42,16 +42,10 @@ namespace AdventOfCode.Year2025
 
         private void TryAddNewLimit(long start, long end)
         {
-            if (freshLimits.Any(x=>x.start <= start && x.end >= end))
-            {
-                return;
-            }
             var overlaps = freshLimits.Where(x => x.start <= start && x.end >= start
                                             || x.start <= end && x.end >= end
                                             || x.start >= start && x.end <= end).ToList();
-            freshLimits.RemoveAll(x => x.start <= start && x.end >= start
-                                            || x.start <= end && x.end >= end
-                                            || x.start >= start && x.end <= end);
+            freshLimits = freshLimits.Except(overlaps).ToList();
             overlaps.Add((start, end));
             freshLimits.Add((overlaps.Min(x => x.start), overlaps.Max(x => x.end)));
         }
