@@ -9,7 +9,7 @@ namespace AdventOfCode
         static void Main(string[] args)
         {
             //NewYearGenerator.GenerateNextYear(2025);
-            Type dayType = typeof(Day04);
+            Type dayType = typeof(Day05);
 
 
             var files = StaticHelpers.GetAllTxtFiles(dayType);
