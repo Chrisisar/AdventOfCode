@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace AdventOfCode.Helpers
 {
     internal class NewYearGenerator
     {
+        const int NumberOfDays = 12;
+
         public static void GenerateNextYear(int newYear)
         {
             DirectoryInfo directory = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent;
@@ -18,7 +17,7 @@ namespace AdventOfCode.Helpers
             {
                 newYearDirectory.Create();
             }
-            for (int i = 1; i <= 25; i++)
+            for (int i = 1; i <= NumberOfDays; i++)
             {
                 DirectoryInfo dayDirectory = new DirectoryInfo($"{newYearDirectory.FullName}\\Day{i.ToString("00")}");
                 if (!dayDirectory.Exists)
